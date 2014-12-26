@@ -1,0 +1,5 @@
+- include: install.yml
+  tags: [xbmc, xbmc-install]
+
+- include: config.yml
+  tags: [xbmc, xbmc-config]

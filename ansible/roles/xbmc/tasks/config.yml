@@ -1,0 +1,28 @@
+
+- name: Xbmc | create xbmc group
+  group: 
+   name=xbmc
+   state=present
+
+- name: Xbmc | Add the xbmc user 
+  user: 
+    name=xbmc
+    group=xbmc
+    password={{ xbmc_user_password }}
+    state=present
+
+- name: Xbmc | Copy xbmc desktop configuratio file.
+  template:
+    src=XBMC.desktop.j2
+    dest=/usr/share/xsessions/XBMC.desktop
+    owner=root group=root mode=600
+
+- name: Xbmc | Copy lightdm config.
+  template:
+    src=lightdm.conf.j2
+    dest=/etc/lightdm/lightdm.conf
+    owner=root group=root mode=600
+
+
+
+
