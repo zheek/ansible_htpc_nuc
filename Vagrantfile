@@ -4,6 +4,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    config.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--memory", "1536"]
+      v.customize ["modifyvm", :id, "--graphicscontroller", "vboxvga"]
+      v.customize ["modifyvm", :id, "--accelerate3d", "on"]
+      v.customize ["modifyvm", :id, "--ioapic", "on"]
+      v.customize ["modifyvm", :id, "--vram", "128"]
+      v.customize ["modifyvm", :id, "--hwvirtex", "on"]
    end
 
   config.vm.define 'htpc' do |machine|
@@ -21,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "htpc-machine" => ["htpc"],
       "all_groups:children" => ["htpc-machine"]
     }
-    # ansible.verbose = 'vvvv'
+  #   ansible.verbose = 'vvvv'
   end
 end
 

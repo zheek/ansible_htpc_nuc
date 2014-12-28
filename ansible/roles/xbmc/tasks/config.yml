@@ -8,10 +8,31 @@
   user: 
     name=xbmc
     group=xbmc
-    password={{ xbmc_user_password }}
+    password="$6$KXhoUlSr$xw8sea8NNks71ut5O2SdHc4iume47fwZCk33dYol.uz7SR/fGGM19hsT5lh7nHegnBBYH4..6acdTmDEwVfjW0"
     state=present
 
-- name: Xbmc | Copy xbmc desktop configuratio file.
+- name: Check if sshd_config file contains DenyUsers
+  command: grep 'DenyUsers' /etc/ssh/sshd_config
+  register: deny_users_found
+  failed_when: "'FAILED' in deny_users_found.stderr"
+
+- name: prevent xbmc user to login with ssh - append if DenyUsers line exists
+  replace: 
+    dest=/etc/ssh/sshd_config
+    regexp='(^\s+DenyUsers(\s+(?!xbmc)[\w=/\-\.]+)*)\s*$'
+    replace='\1 xbmc'
+  notify: restart sshd
+  when: deny_users_found.stdout
+
+- name: prevent xbmc user to login with ssh - add DenyUsers
+  lineinfile: 
+    dest=/etc/ssh/sshd_config
+    state=present
+    line='DenyUsers xbmc'
+  notify: restart sshd
+  when: not deny_users_found.stdout
+
+- name: Xbmc | Copy xbmc desktop configuration file.
   template:
     src=XBMC.desktop.j2
     dest=/usr/share/xsessions/XBMC.desktop
@@ -22,7 +43,5 @@
     src=lightdm.conf.j2
     dest=/etc/lightdm/lightdm.conf
     owner=root group=root mode=600
-
-
 
 

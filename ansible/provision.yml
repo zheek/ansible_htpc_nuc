@@ -7,8 +7,8 @@
   roles:
     - setup
     - xbmc
-  vars_prompt:
-    - name: "xbmc_user_password"
-      prompt: "Enter xbmc user password"
-      private: yes
-      default: "xbmc"
+#  vars_prompt:
+#    - name: "xbmc_user_password"
+#      prompt: "Enter xbmc user password"
+#      private: yes
+#      default: "xbmc"

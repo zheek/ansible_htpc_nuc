@@ -1,3 +1,15 @@
+---
+# Install XBMC on nuc
+# 
+# The purpose is to install a stand-alone XBMC as the front-end application in the nuc, 
+# that only requires the least system requirements.
+#.
+# Note: for some reason xbmc package is renmaed to kodi
+# 
+# References: 
+# https://chubbable.com/step-step-guide-install-xbmc-13-1-gotham-ubuntu-14-04-lts-server
+# http://booting-rpi.blogspot.nl/2014/07/ubuntu-1404-minimal-intel-nuc-xbmc.html
+
 - include: install.yml
   tags: [xbmc, xbmc-install]
 
